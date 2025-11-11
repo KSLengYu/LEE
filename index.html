@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LengYu Network Technology</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #f8f9fa;
+      color: #333;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+    header {
+      background-color: #000;
+      color: white;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 15px 30px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+    .logo {
+      font-size: 1.4em;
+      font-weight: bold;
+      letter-spacing: 1px;
+    }
+    nav a {
+      color: white;
+      text-decoration: none;
+      margin-left: 25px;
+      font-size: 1em;
+      transition: opacity 0.2s ease;
+    }
+    nav a:hover {
+      opacity: 0.7;
+    }
+    iframe {
+      flex-grow: 1;
+      width: 100%;
+      height: calc(100vh - 100px);
+      border: none;
+      margin-top: 0;
+    }
+    footer {
+      background-color: #000;
+      color: #aaa;
+      text-align: center;
+      padding: 12px 0;
+      font-size: 0.9em;
+    }
+    @media (max-width: 600px) {
+      nav a {
+        margin-left: 12px;
+        font-size: 0.9em;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="logo">LengYu Network Technology</div>
+    <nav>
+      <a href="#home">首页</a>
+      <a href="#projects">作品集</a>
+      <a href="https://www.notion.so/LengYu-s-Webside-2a8b126d2a9280c6bcfdc73bc9936861" target="_blank">关于我</a>
+      <a href="#contact">联系</a>
+    </nav>
+  </header>
+
+  <iframe src="https://www.notion.so/LengYu-s-Webside-2a8b126d2a9280c6bcfdc73bc9936861" allowfullscreen></iframe>
+
+  <footer>© 2025 LengYu Network Technology · All Rights Reserved</footer>
+
+</body>
+</html>
