@@ -4,7 +4,6 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>LengYu Network Technology</title>
-<!-- 科幻字体 Orbitron -->
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700&display=swap" rel="stylesheet">
 <style>
 body {
@@ -24,7 +23,6 @@ body {
 }
 body.fade-in { opacity: 1; }
 
-/* 标题字体改为科幻风格 Orbitron */
 h1 {
   font-family: 'Orbitron', sans-serif;
   font-size: 3em;
@@ -48,7 +46,6 @@ button.site-btn:hover:not(:disabled) { transform: translateY(-4px); box-shadow:0
 
 .footer { position:absolute; bottom:20px; color:#ccc; font-size:0.9em; }
 
-/* 模态框 */
 .modal { position: fixed; z-index:1000; left:0; top:0; width:100%; height:100%; background: rgba(0,0,0,0.7); backdrop-filter: blur(6px); display:flex; justify-content:center; align-items:center; opacity:0; pointer-events:none; transition: opacity 0.3s ease; }
 .modal.show { opacity:1; pointer-events:auto; }
 
@@ -108,11 +105,18 @@ button.site-btn:hover:not(:disabled) { transform: translateY(-4px); box-shadow:0
   border-radius:4px;
 }
 
-/* 背景视频 */
-#bgVideo { position: fixed; top:0; left:0; width:100%; height:100%; object-fit:cover; z-index:-1; opacity:0; transition:opacity 2s ease; }
+#bgFallback {
+  position:fixed; top:0; left:0; width:100%; height:100%;
+  object-fit:cover; z-index:-1; display:none;
+  opacity:0; transition: opacity 2s ease;
+}
+
+#bgVideo {
+  position:fixed; top:0; left:0; width:100%; height:100%;
+  object-fit:cover; z-index:-1; opacity:0; transition:opacity 2s ease;
+}
 body.fade-in #bgVideo { opacity:1; }
 
-/* 加载动画 */
 #loader {
   position: fixed; top:0; left:0; width:100%; height:100%;
   background:#000; display:flex; justify-content:center; align-items:center; z-index:2000;
@@ -136,6 +140,8 @@ body.fade-in #bgVideo { opacity:1; }
   <source src="video.mp4" type="video/mp4">
   您的浏览器不支持视频标签。
 </video>
+
+<img src="picture.jpg" id="bgFallback">
 
 <h1>LengYu Network Technology</h1>
 <div class="button-container" id="buttons"></div>
@@ -163,10 +169,35 @@ window.addEventListener('load',()=>{
   loader.style.transition='opacity 0.5s ease';
   loader.style.opacity='0';
   setTimeout(()=>{loader.style.display='none'; document.body.classList.add('fade-in');},500);
+
+  const bgVideo=document.getElementById('bgVideo');
+  const bgFallback=document.getElementById('bgFallback');
+
+  // 尝试播放视频，如果失败显示图片
+  bgVideo.play().then(()=>{
+    bgVideo.style.display='block';
+    bgVideo.style.opacity='1';
+  }).catch(()=>{
+    bgVideo.style.display='none';
+    bgFallback.style.display='block';
+    setTimeout(()=>bgFallback.style.opacity='1',50);
+  });
+
+  document.body.addEventListener('click',()=>{
+    if(bgVideo.paused){
+      bgVideo.play().catch(()=>{
+        bgVideo.style.display='none';
+        bgFallback.style.display='block';
+        setTimeout(()=>bgFallback.style.opacity='1',50);
+      });
+    }
+  },{once:true});
 });
 
 const links=[
-  { name:"进入 LengYu‘s Webside", url:"https://www.notion.so/LengYu-s-Webside-2a8b126d2a9280c6bcfdc73bc9936861", password:"wuzhong2025" },
+  { name:"进入 LengYu‘s Webside", url:"https://www.notion.so/LengYu-s-Webside-2a8b126d2a9280c6bcfdc73bc9936861", password:"lengyu2025" },
+  { name:"进入 摄影站", url:"https://photo.lengyu.com", password:"photo2025" },
+  { name:"进入 博客", url:"https://blog.lengyu.com", password:"blog2025" },
 ];
 
 const attempts={}, locked={}, failedSeries={};
@@ -298,4 +329,3 @@ function lockTarget(url,seconds){
 </script>
 </body>
 </html>
-
