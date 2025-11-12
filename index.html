@@ -1,117 +1,300 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>LengYu Network Technology</title>
-  <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>LengYu Network Technology</title>
+<!-- 科幻字体 Orbitron -->
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700&display=swap" rel="stylesheet">
+<style>
+body {
+  margin: 0;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  font-family: 'Poppins', sans-serif;
+  color: white;
+  text-align: center;
+  background-color: #000;
+  overflow: hidden;
+  opacity: 0;
+  transition: opacity 2s ease;
+}
+body.fade-in { opacity: 1; }
 
-    body, html {
-      height: 100%;
-      font-family: 'Segoe UI', sans-serif;
-      overflow: hidden;
-    }
+/* 标题字体改为科幻风格 Orbitron */
+h1 {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 3em;
+  text-shadow: 0 0 10px #00ffff, 0 0 20px #00ffff;
+  margin-bottom: 30px;
+}
 
-    /* 背景图片 */
-    .background {
-      position: fixed;
-      width: 100%;
-      height: 100%;
-      background: url("微信图片_20251111192915_202_128.jpg") no-repeat center center/cover;
-      filter: brightness(0.6);
-      z-index: 1;
-    }
+.button-container { display: flex; flex-wrap: wrap; justify-content:center; gap:20px; }
+button.site-btn {
+  font-size:1.05em;
+  padding:12px 28px;
+  border:none;
+  border-radius:28px;
+  background:linear-gradient(90deg,#00ffff,#0077ff);
+  color:white;
+  cursor:pointer;
+  box-shadow:0 0 10px #00ffff;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+button.site-btn:hover:not(:disabled) { transform: translateY(-4px); box-shadow:0 0 20px #00ffff,0 0 40px #0077ff; }
 
-    /* 主内容 */
-    .content {
-      position: relative;
-      z-index: 2;
-      height: 100%;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      color: #ffffff;
-      text-align: center;
-    }
+.footer { position:absolute; bottom:20px; color:#ccc; font-size:0.9em; }
 
-    h1 {
-      font-size: 3em;
-      text-shadow: 0 0 20px rgba(0, 255, 255, 0.6);
-      margin-bottom: 30px;
-      animation: glow 2s ease-in-out infinite alternate;
-    }
+/* 模态框 */
+.modal { position: fixed; z-index:1000; left:0; top:0; width:100%; height:100%; background: rgba(0,0,0,0.7); backdrop-filter: blur(6px); display:flex; justify-content:center; align-items:center; opacity:0; pointer-events:none; transition: opacity 0.3s ease; }
+.modal.show { opacity:1; pointer-events:auto; }
 
-    @keyframes glow {
-      from {
-        text-shadow: 0 0 10px #0ff, 0 0 20px #0ff;
-      }
-      to {
-        text-shadow: 0 0 30px #00ffff, 0 0 60px #00ffff;
-      }
-    }
+.modal-content {
+  background: rgba(12,12,14,0.96);
+  padding: 30px;
+  border-radius: 14px;
+  box-shadow: 0 0 30px rgba(0,255,255,0.15);
+  border:1px solid rgba(0,255,255,0.15);
+  text-align:center;
+  width:90%;
+  max-width:420px;
+  color:#e6fefe;
+  transform: scale(0.9);
+  transition: transform 0.3s ease;
+  will-change: transform;
+}
+.modal.show .modal-content { transform:scale(1); }
 
-    .button {
-      padding: 15px 35px;
-      font-size: 1.1em;
-      color: #fff;
-      border: none;
-      border-radius: 12px;
-      background: linear-gradient(90deg, #00f5ff, #00ffaa);
-      box-shadow: 0 0 20px #00ffff;
-      cursor: pointer;
-      transition: all 0.3s ease;
-      text-decoration: none;
-    }
+.modal-title { font-size:1.1rem; margin-bottom:12px; color:#bff9ff; }
 
-    .button:hover {
-      background: linear-gradient(90deg, #00ffaa, #00f5ff);
-      box-shadow: 0 0 35px #00ffff, 0 0 60px #00ffff;
-      transform: scale(1.05);
-    }
+.modal-content input {
+  width:86%;
+  padding:10px;
+  border-radius:8px;
+  border:1px solid rgba(0,255,255,0.25);
+  background:transparent;
+  color:white;
+  outline:none;
+  margin-bottom:12px;
+  font-size:1rem;
+  transition: transform 0.1s ease;
+}
+.modal-content input.error { animation: shake 0.3s ease; }
 
-    /* 底部文字 */
-    .footer {
-      position: absolute;
-      bottom: 20px;
-      width: 100%;
-      text-align: center;
-      color: rgba(255, 255, 255, 0.7);
-      font-size: 0.9em;
-      z-index: 3;
-      animation: fadeInOut 6s ease-in-out infinite;
-      text-shadow: 0 0 10px rgba(0, 255, 255, 0.4);
-    }
+@keyframes shake { 0%,100%{transform:translateX(0);} 20%,60%{transform:translateX(-6px);} 40%,80%{transform:translateX(6px);} }
 
-    @keyframes fadeInOut {
-      0%, 100% { opacity: 0.6; }
-      50% { opacity: 1; }
-    }
+.modal-actions { display:flex; justify-content:center; gap:12px; align-items:center; }
+.modal-actions button {
+  padding:10px 18px; border-radius:10px; border:none; cursor:pointer;
+  font-size:0.95rem; background:linear-gradient(90deg,#00ffff,#0077ff);
+  color:#001; box-shadow:0 0 12px rgba(0,255,255,0.15);
+  transition: transform 0.2s ease, box-shadow 0.2s ease; will-change: transform,box-shadow;
+}
+.modal-actions button:disabled { opacity:0.5; cursor:not-allowed; }
 
-  </style>
+.msg { margin-top:10px; font-size:0.95rem; color:#ffbaba; }
+.lock-msg { margin-top:8px; color:#ff6b6b; font-weight:600; text-shadow:0 0 6px rgba(255,107,107,0.2); }
+
+#progressContainer {
+  width:86%; height:6px; background:rgba(0,255,255,0.2); border-radius:4px; margin:10px auto; overflow:hidden; display:none;
+}
+#progressBar {
+  width:0%; height:100%;
+  background:linear-gradient(270deg,#00ffff,#0077ff,#00ffff);
+  background-size:600% 100%;
+  border-radius:4px;
+}
+
+/* 背景视频 */
+#bgVideo { position: fixed; top:0; left:0; width:100%; height:100%; object-fit:cover; z-index:-1; opacity:0; transition:opacity 2s ease; }
+body.fade-in #bgVideo { opacity:1; }
+
+/* 加载动画 */
+#loader {
+  position: fixed; top:0; left:0; width:100%; height:100%;
+  background:#000; display:flex; justify-content:center; align-items:center; z-index:2000;
+  color:#00ffff; font-family:'Poppins',sans-serif; font-size:1.5em; flex-direction:column;
+}
+.spinner {
+  border:4px solid rgba(0,255,255,0.2); border-top:4px solid #00ffff;
+  border-radius:50%; width:50px; height:50px; animation:spin 1s linear infinite; margin-bottom:10px;
+}
+@keyframes spin { 0%{transform:rotate(0deg);} 100%{transform:rotate(360deg);} }
+</style>
 </head>
 <body>
-  <div class="background"></div>
 
-  <div class="content">
-    <h1>LengYu Network Technology</h1>
-    <a href="https://tremendous-houseboat-588.notion.site/LengYu-s-Webside-2a8b126d2a9280c6bcfdc73bc9936861?source=copy_link" target="_blank" class="button">
-      进入 LengYu’s Webside
-    </a>
-  </div>
+<div id="loader">
+  <div class="spinner"></div>
+  <div>正在加载中...</div>
+</div>
 
-  <div class="footer">
-    © 2025 LengYu Network Technology
+<video autoplay muted loop playsinline id="bgVideo">
+  <source src="video.mp4" type="video/mp4">
+  您的浏览器不支持视频标签。
+</video>
+
+<h1>LengYu Network Technology</h1>
+<div class="button-container" id="buttons"></div>
+<div class="footer">© 2025 LengYu Network Technology</div>
+
+<div id="passwordModal" class="modal">
+  <div class="modal-content">
+    <div class="modal-title">输入访问密码</div>
+    <input id="passwordInput" type="password" placeholder="输入密码..." autocomplete="off" />
+    <div class="modal-actions">
+      <button id="confirmBtn">确认进入</button>
+      <button id="cancelBtn">取消</button>
+    </div>
+    <div id="msg" class="msg"></div>
+    <div id="progressContainer">
+      <div id="progressBar"></div>
+    </div>
+    <div id="lockInfo" class="lock-msg"></div>
   </div>
+</div>
+
+<script>
+window.addEventListener('load',()=>{
+  const loader=document.getElementById('loader');
+  loader.style.transition='opacity 0.5s ease';
+  loader.style.opacity='0';
+  setTimeout(()=>{loader.style.display='none'; document.body.classList.add('fade-in');},500);
+});
+
+const links=[
+  { name:"进入 LengYu‘s Webside", url:"https://www.notion.so/LengYu-s-Webside-2a8b126d2a9280c6bcfdc73bc9936861", password:"lengyu2025" },
+];
+
+const attempts={}, locked={}, failedSeries={};
+const buttonsContainer=document.getElementById("buttons");
+const modal=document.getElementById("passwordModal");
+const passwordInput=document.getElementById("passwordInput");
+const confirmBtn=document.getElementById("confirmBtn");
+const cancelBtn=document.getElementById("cancelBtn");
+const msg=document.getElementById("msg");
+const lockInfo=document.getElementById("lockInfo");
+const progressContainer=document.getElementById("progressContainer");
+const progressBar=document.getElementById("progressBar");
+let currentTarget=null;
+
+links.forEach(l=>{
+  attempts[l.url]=0;
+  locked[l.url]=false;
+  failedSeries[l.url]=0;
+});
+
+function renderButtons(){
+  buttonsContainer.innerHTML="";
+  links.forEach(link=>{
+    const btn=document.createElement("button");
+    btn.className="site-btn";
+    btn.textContent=link.name;
+    btn.onclick=()=>openModalFor(link);
+    btn.id="btn-"+encodeURIComponent(link.url);
+    buttonsContainer.appendChild(btn);
+  });
+}
+renderButtons();
+
+function openModalFor(link){
+  currentTarget=link;
+  modal.classList.add('show');
+  passwordInput.value="";
+  passwordInput.focus();
+  msg.textContent="";
+  lockInfo.textContent="";
+  progressContainer.style.display="none";
+  progressBar.style.width="0%";
+  updateConfirmState();
+}
+
+function updateConfirmState(){
+  if(!currentTarget) return;
+  if(locked[currentTarget.url]){
+    confirmBtn.disabled=true;
+    passwordInput.disabled=true;
+    lockInfo.textContent=`系统锁定中，请稍后再试`;
+  } else {
+    confirmBtn.disabled=false;
+    passwordInput.disabled=false;
+    lockInfo.textContent="";
+  }
+}
+
+function springEase(t){ return 1-Math.cos(t*Math.PI*0.5)*Math.exp(-6*t); }
+
+confirmBtn.addEventListener("click",()=>{
+  if(!currentTarget) return;
+  if(locked[currentTarget.url]) { updateConfirmState(); return; }
+
+  const input=passwordInput.value.trim();
+  if(input===""){ msg.style.color='#ffbaba'; msg.textContent="请输入密码！"; return; }
+
+  if(input===currentTarget.password){
+    msg.style.color='#a0ff8c'; msg.textContent="验证成功！即将进入...";
+    progressContainer.style.display="block";
+    progressBar.style.width="0%";
+    let start=null;
+    function animateProgress(timestamp){
+      if(!start) start=timestamp;
+      let elapsed=timestamp-start;
+      let t=Math.min(elapsed/1000,1);
+      let percent=springEase(t)*100;
+      progressBar.style.width=percent+"%";
+      if(t<1) requestAnimationFrame(animateProgress);
+      else window.location.href=currentTarget.url;
+    }
+    requestAnimationFrame(animateProgress);
+  } else {
+    attempts[currentTarget.url]++;
+    msg.style.color='#ffbaba';
+    msg.textContent=`密码错误 （${attempts[currentTarget.url]}/5）`;
+    passwordInput.classList.add("error");
+    setTimeout(()=>passwordInput.classList.remove("error"),300);
+    if(attempts[currentTarget.url]>=5){
+      failedSeries[currentTarget.url]++;
+      let lockTime=30*Math.pow(2,failedSeries[currentTarget.url]-1);
+      lockTarget(currentTarget.url,lockTime);
+    }
+  }
+});
+
+cancelBtn.addEventListener("click",closeModal);
+window.addEventListener("click",e=>{ if(e.target===modal) closeModal(); });
+passwordInput.addEventListener("keypress",e=>{ if(e.key==="Enter") confirmBtn.click(); });
+
+function closeModal(){
+  modal.classList.remove('show');
+  currentTarget=null;
+  passwordInput.value="";
+  msg.textContent="";
+  lockInfo.textContent="";
+  progressContainer.style.display="none";
+  progressBar.style.width="0%";
+}
+
+function lockTarget(url,seconds){
+  locked[url]=true;
+  attempts[url]=0;
+  confirmBtn.disabled=true;
+  passwordInput.disabled=true;
+
+  const interval=setInterval(()=>{
+    seconds--;
+    if(currentTarget && currentTarget.url===url){
+      lockInfo.textContent=`系统锁定中，请稍后再试（${seconds}s）`;
+    }
+    if(seconds<=0){
+      clearInterval(interval);
+      locked[url]=false;
+      if(currentTarget && currentTarget.url===url) updateConfirmState();
+    }
+  },1000);
+}
+</script>
 </body>
 </html>
-
-
-
-
-
