@@ -1,88 +1,114 @@
 <!DOCTYPE html>
-<html lang="zh">
+<html lang="zh-CN">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>LengYu Network Technology</title>
   <style>
-    * {
+    body {
+      font-family: Arial, sans-serif;
+      background: #f5f5f5;
+      color: #333;
       margin: 0;
       padding: 0;
-      box-sizing: border-box;
-    }
-    body {
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background-color: #f8f9fa;
-      color: #333;
-      display: flex;
-      flex-direction: column;
-      min-height: 100vh;
     }
     header {
-      background-color: #000;
-      color: white;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
+      background-color: #222;
+      color: #fff;
+      padding: 40px 20px;
+      text-align: center;
+    }
+    header h1 {
+      margin: 0;
+      font-size: 2.5em;
+    }
+    header p {
+      font-size: 1.2em;
+      margin-top: 10px;
+    }
+    .container {
+      max-width: 900px;
+      margin: 50px auto;
+      padding: 0 20px;
+    }
+    .notion-btn {
+      display: inline-block;
+      margin: 20px 0;
       padding: 15px 30px;
-      box-shadow: 0 2px 4px rgba(0,0,0,0.2);
-      position: sticky;
-      top: 0;
-      z-index: 10;
-    }
-    .logo {
-      font-size: 1.4em;
-      font-weight: bold;
-      letter-spacing: 1px;
-    }
-    nav a {
+      background-color: #4caf50;
       color: white;
       text-decoration: none;
-      margin-left: 25px;
-      font-size: 1em;
-      transition: opacity 0.2s ease;
+      font-size: 18px;
+      border-radius: 8px;
+      transition: background 0.3s;
     }
-    nav a:hover {
-      opacity: 0.7;
+    .notion-btn:hover {
+      background-color: #45a049;
     }
-    iframe {
-      flex-grow: 1;
+    .gallery {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+      gap: 20px;
+      margin-top: 40px;
+    }
+    .gallery-item {
+      background: #fff;
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+      text-align: center;
+    }
+    .gallery-item img {
       width: 100%;
-      height: calc(100vh - 100px);
-      border: none;
-      margin-top: 0;
+      display: block;
+    }
+    .gallery-item p {
+      margin: 10px 0;
+      font-size: 14px;
+      color: #666;
     }
     footer {
-      background-color: #000;
-      color: #aaa;
       text-align: center;
-      padding: 12px 0;
-      font-size: 0.9em;
-    }
-    @media (max-width: 600px) {
-      nav a {
-        margin-left: 12px;
-        font-size: 0.9em;
-      }
+      padding: 30px 20px;
+      background: #222;
+      color: #fff;
+      margin-top: 50px;
     }
   </style>
 </head>
 <body>
 
   <header>
-    <div class="logo">LengYu Network Technology</div>
-    <nav>
-      <a href="#home">首页</a>
-      <a href="#projects">作品集</a>
-      <a href="https://tremendous-houseboat-588.notion.site/LengYu-s-Webside-2a8b126d2a9280c6bcfdc73bc9936861" target="_blank">关于我</a>
-      <a href="#contact">联系</a>
-    </nav>
+    <h1>LengYu Network Technology</h1>
+    <p>个人介绍 & 摄影作品展示</p>
   </header>
 
-  <iframe src="https://tremendous-houseboat-588.notion.site/LengYu-s-Webside-2a8b126d2a9280c6bcfdc73bc9936861" allowfullscreen></iframe>
+  <div class="container">
+    <a href="https://www.notion.so/LengYu-s-Webside-2a8b126d2a9280c6bcfdc73bc9936861" target="_blank" class="notion-btn">
+      查看 Notion 页面
+    </a>
 
-  <footer>© 2025 LengYu Network Technology · All Rights Reserved</footer>
+    <h2>摄影作品示例</h2>
+    <div class="gallery">
+      <div class="gallery-item">
+        <img src="https://via.placeholder.com/400x300?text=作品1" alt="作品1">
+        <p>相机型号：Canon EOS R</p>
+      </div>
+      <div class="gallery-item">
+        <img src="https://via.placeholder.com/400x300?text=作品2" alt="作品2">
+        <p>相机型号：Sony A7 IV</p>
+      </div>
+      <div class="gallery-item">
+        <img src="https://via.placeholder.com/400x300?text=作品3" alt="作品3">
+        <p>相机型号：Fujifilm X-T4</p>
+      </div>
+      <!-- 可以按需增加更多作品 -->
+    </div>
+  </div>
+
+  <footer>
+    &copy; 2025 LengYu Network Technology
+  </footer>
 
 </body>
 </html>
-
